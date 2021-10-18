@@ -48,10 +48,11 @@ static int doNothing(void* arg) {
 
 int main(int argc, char* argv[]) {
 
+	printf("LoadAverage generator by @saruspete\n\n");
+
 	if (argc < 2) {
 		printf("Usage: %s <load_to_generate> [load_to_exit_at]\n", argv[0]);
-		printf("\n");
-		printf("Load can be 'max' to spawn as many as possible\n");
+		printf("\nLoad can be 'max' to spawn as many as possible\n");
 		return EXIT_FAILURE;
 	}
 
