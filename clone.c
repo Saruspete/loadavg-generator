@@ -75,11 +75,11 @@ int main(int argc, char* argv[]) {
 		loadExit = tMax;
 	}
 
+	printf("Check consumption with 'ps -up %u' (don't use top)\n", getpid());
 	printf("Will try to run %u threads and stop at %u load\n", tMax, loadExit);
 
-	int cloneFlags = CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SYSVSEM
-					| CLONE_SIGHAND | CLONE_THREAD
-					;
+	int cloneFlags = CLONE_VM | CLONE_THREAD | CLONE_SIGHAND;
+				//| CLONE_FS | CLONE_FILES  | CLONE_SYSVSEM
 				//	| CLONE_SETTLS | CLONE_PARENT_SETTID
 				//	| CLONE_CHILD_CLEARTID;
 	int tCnt;
