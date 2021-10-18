@@ -26,8 +26,12 @@ function sysctlSet {
 
 	typeset valCurr="$(sysctl "$sysctl" 2>/dev/null)"
 	valCurr="${valCurr##*= }"
-	if [[ "$valCurr" != "$value" ]]; then
-		sysctl "$sysctl=$value"
+	if [[ "$valCurr" -lt "$value" ]]; then
+		if [[ $UID != 0 ]]; then
+			echo >&2 "ERR: You are not root, cannot increase sysctl '$sysctl' from '$valCurr' to '$value'"
+		else
+			sysctl "$sysctl=$value"
+		fi
 	fi
 }
 
@@ -37,7 +41,13 @@ function rlimitSet {
 
 	typeset valCurr="$(ulimit -$ulim)"
 	if [[ "$valCurr" != "$uval" ]]; then
-		ulimit -$ulim "$uval"
+		if ! ulimit -$ulim "$uval" 2>/dev/null; then
+			if [[ $UID -ne 0 ]]; then
+				echo >&2 "ERR: You are not root. Cannot increase ulimit '$ulim' from '$valCurr' to '$uval'"
+			else
+				echo >&2 "ERR: Limit '$uval' too high for '$ulim'. Check your /etc/security/limits.conf"
+			fi
+		fi
 	fi
 }
 function loadavgGet1 {
@@ -61,4 +71,7 @@ sysctlSet kernel.threads-max 4194304
 
 # Run the app
 # Will consume a lot of task_struct
-taskset -c 1,2 ./clone "${1:-max}"
+typeset load="${1:-max}"
+shift
+
+taskset -c 1,2 ./clone "$load" "$@"
