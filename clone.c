@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
 		loadExit = tMax;
 	}
 
+	printf("Will try to run %u threads and stop at %u load\n", tMax, loadExit);
+
 	int cloneFlags = CLONE_VM | CLONE_FS | CLONE_FILES | CLONE_SYSVSEM
 					| CLONE_SIGHAND | CLONE_THREAD
 					;
