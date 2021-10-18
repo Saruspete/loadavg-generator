@@ -20,4 +20,5 @@ However, kernel task_struct will consume a lot of ram nontheless.
 	   45 Load: 2112802 (164279)
 	104.27user 71.73system 1:44.09elapsed 169%CPU (0avgtext+0avgdata 16000296maxresident)k
 	0inputs+0outputs (0major+4003112minor)pagefaults 0swaps
+	 10:47:18 up 31 days, 18:48,  6 users,  load average: 221381.63, 66572.37, 22953.94
 
