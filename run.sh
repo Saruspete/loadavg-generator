@@ -48,7 +48,7 @@ function loadavgGet1 {
 # Check for compilation
 if ! [[ -x "$MYPATH/clone" ]] || [[ "$MYPATH/clone.c" -nt "$MYPATH/clone" ]]; then
 	echo "Compiling clone..."
-	cc -static $MYPATH/clone.c -o $MYPATH/clone || die "Compilation error"
+	cc -static -Wall $MYPATH/clone.c -o $MYPATH/clone || die "Compilation error"
 fi
 
 

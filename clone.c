@@ -26,8 +26,7 @@
 
 
 
-int doStart = 0, doContinue = 1;
-int futexStart;
+int doContinue = 1, futexStart;
 unsigned int tMax = 0, loadExit = 0;
 
 int futex_wake(void* addr, int n){
@@ -35,7 +34,6 @@ int futex_wake(void* addr, int n){
 }
 
 static int doNothing(void* arg) {
-
 	futexStart = 0;
 	syscall(SYS_futex, &futexStart, 0, NULL, NULL, 0);
 
@@ -82,10 +80,10 @@ int main(int argc, char* argv[]) {
 					;
 				//	| CLONE_SETTLS | CLONE_PARENT_SETTID
 				//	| CLONE_CHILD_CLEARTID;
-
+	int tCnt;
 
 	// Create all our threads
-	for (int tCnt = 0; tCnt < tMax; tCnt++) {
+	for (tCnt = 0; tCnt < tMax; tCnt++) {
 		void *cloneStack = mmap( 0, STACK_SIZE, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 		// The glibc clone wrapper wants a stack...
 		if (clone(&doNothing, cloneStack + STACK_SIZE, cloneFlags, NULL) == -1) {
