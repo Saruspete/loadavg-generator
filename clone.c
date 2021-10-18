@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 		loadExit = tMax;
 	}
 
-	printf("Check consumption with 'ps -up %u' (don't use top)\n", getpid());
+	printf("Check consumption with 'grep kB /proc/%u/status' (don't use ps/top)\n", getpid());
 	printf("Will try to run %u threads and stop at %u load\n", tMax, loadExit);
 
 	int cloneFlags = CLONE_VM | CLONE_THREAD | CLONE_SIGHAND;
