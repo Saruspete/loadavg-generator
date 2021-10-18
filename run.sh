@@ -75,3 +75,4 @@ typeset load="${1:-max}"
 shift
 
 taskset -c 1,2 ./clone "$load" "$@"
+uptime
